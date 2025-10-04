@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
-	"time"
 
 	"google.golang.org/protobuf/proto"
 )
@@ -14,7 +13,6 @@ import (
 var logger = getLogger()
 
 func getFeedMessage() *FeedMessage {
-	ts := time.Now().Unix()
 	resp, err := http.NewRequest(http.MethodGet, os.Getenv("GTFS-RT_ENDPOINT"), nil)
 	resp.Header.Add("Authorization", "Bearer "+os.Getenv("GTFS_RT_API_KEY"))
 	resp.Header.Add("User-Agent", "TrailateService")
@@ -48,7 +46,7 @@ func getFeedMessage() *FeedMessage {
 
 	// Compress and write to file
 	compBodBytes := compressData(bodyBytes)
-	compressedFileName := fmt.Sprintf("%d_gtfs-rt.pb.gz", ts)
+	compressedFileName := "gtfs-rt.pb.gz"
 
 	err = os.WriteFile(compressedFileName, compBodBytes, 0644)
 
