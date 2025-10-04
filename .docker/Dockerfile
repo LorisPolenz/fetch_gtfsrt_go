@@ -13,4 +13,6 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifi
 
 COPY --from=builder /app/app .
 
+RUN mkdir /go/data/
+
 CMD ["./app"]
